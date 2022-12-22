@@ -1,4 +1,4 @@
-﻿namespace Enums
+﻿namespace TestTask.Model.Enums
 {
 	public enum ProjectStatus
 	{

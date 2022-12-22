@@ -1,20 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Entities;
-using Enums;
+using TestTask.Model;
+using TestTask.Model.Enums;
 
-namespace Data
+namespace TestTask.Data
 {
 	public class TestTaskDbContext : DbContext
 	{
 		public TestTaskDbContext(DbContextOptions<TestTaskDbContext> options) : base(options) { }
-		public DbSet<ProjectEntity> Projects { get; set; }
-		public DbSet<TaskEntity> Tasks { get; set; }
+		public DbSet<ProjectModel> Projects { get; set; }
+		public DbSet<TaskModel> Tasks { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);
 
-			modelBuilder.Entity<ProjectEntity>().HasData(new ProjectEntity
+			modelBuilder.Entity<ProjectModel>().HasData(new ProjectModel
 			{
 				Id = 1,
 				Name = "test name",
@@ -24,12 +24,12 @@ namespace Data
 				Priority = 4
 			});
 
-			modelBuilder.Entity<TaskEntity>().HasData(new TaskEntity
+			modelBuilder.Entity<TaskModel>().HasData(new TaskModel
 			{
 				Id = 1,
 				Name = "test task name",
-				Status = Enums.TaskStatus.Done,
-				Discription = "Test discription",
+				Status = TestTask.Model.Enums.TaskStatus.Done,
+				Description = "Test description",
 				Priority = 3,
 				ProjectId = 1
 			});

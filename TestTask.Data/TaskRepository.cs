@@ -1,8 +1,8 @@
-﻿using Data.Interface;
-using Entities;
+﻿using TestTask.Data.Interface;
+using TestTask.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace Data
+namespace TestTask.Data
 {
 	internal class TaskRepository : ITaskRepository
 	{
@@ -12,28 +12,28 @@ namespace Data
 			this.context = context;
 		}
 
-		public async Task<List<TaskEntity>> GetAllTasksAsync() =>
+		public async Task<List<TaskModel>> GetAllTasksAsync() =>
 			await context.Tasks.ToListAsync();
 
-		public async Task<TaskEntity> GetTaskByIdAsync(int id) =>
+		public async Task<TaskModel> GetTaskByIdAsync(int id) =>
 			await context.Tasks.FirstOrDefaultAsync(x => x.Id == id);
 
-		public async Task<TaskEntity> GetTaskByNameAsync(string name) =>
+		public async Task<TaskModel> GetTaskByNameAsync(string name) =>
 			await context.Tasks.FirstOrDefaultAsync(x => x.Name == name);
 
-		public async Task InsertTaskAsync(TaskEntity task)
+		public async Task InsertTaskAsync(TaskModel task)
 		{
 			await context.Tasks.AddAsync(task);
 			await context.SaveChangesAsync();
 		}
 
-		public async Task UpdateTaskAsync(TaskEntity task)
+		public async Task UpdateTaskAsync(TaskModel task)
 		{
 			context.Tasks.Update(task);
 			await context.SaveChangesAsync();
 		}
 
-		public async Task DeleteTaskAsync(TaskEntity task)
+		public async Task DeleteTaskAsync(TaskModel task)
 		{
 			context.Tasks.Remove(task);
 			await context.SaveChangesAsync();

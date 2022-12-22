@@ -1,37 +1,37 @@
-﻿using Data.Interface;
-using Entities;
+﻿using TestTask.Data.Interface;
+using TestTask.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace Data
+namespace TestTask.Data
 {
-	internal class ProjectRepository : IProjectRepository
+	public class ProjectRepository : IProjectRepository
 	{
 		private readonly TestTaskDbContext context;
         public ProjectRepository(TestTaskDbContext context)
         {
 			this.context = context;
         }
-		public async Task<List<ProjectEntity>> GetAllProjectsAsync() =>
+		public async Task<List<ProjectModel>> GetAllProjectsAsync() =>
 			await context.Projects.ToListAsync();
 
-		public async Task<ProjectEntity> GetProjectByIdAsync(int id) =>
+		public async Task<ProjectModel> GetProjectByIdAsync(int id) =>
 			await context.Projects.FirstOrDefaultAsync(x => x.Id == id);
 
-		public async Task<ProjectEntity> GetProjectByNameAsync(string name) =>
+		public async Task<ProjectModel> GetProjectByNameAsync(string name) =>
 			await context.Projects.FirstOrDefaultAsync(x => x.Name == name);
 
-		public async Task InsertProjectAsync(ProjectEntity project)
+		public async Task InsertProjectAsync(ProjectModel project)
 		{
 			await context.Projects.AddAsync(project);
 			await context.SaveChangesAsync();
 		}
 
-		public async Task UpdateProjectAsync(ProjectEntity project)
+		public async Task UpdateProjectAsync(ProjectModel project)
 		{
 			context.Projects.Update(project);
 			await context.SaveChangesAsync();
 		}
-		public async Task DeleteProjectAsync(ProjectEntity project)
+		public async Task DeleteProjectAsync(ProjectModel project)
 		{
 			context.Projects.Remove(project);
 			await context.SaveChangesAsync();
